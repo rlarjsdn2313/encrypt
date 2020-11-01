@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <title>암호화</title>
+</head>
+
+<body>
+    <div class="inputs">
+        <p>
+            <input class="key", id="key" type="text" placeholder="Key" />
+        </p>
+        <p>
+            <!-- <span><textarea class="plain" id="plain"></textarea></span> -->
+
+            <span> <input class="plain" id="plain" type="text" placeholder="Plain Text" /></span>
+            <span><input class="encryption" type="button" value="Encryption" onclick="encryption()" /></span>
+
+        </p>
+        <p>
+            <!-- <span><textarea class="cryptogram" id="cryptogram"></textarea></span> -->
+            <span><input class="cryptogram" id="cryptogram" type="text" placeholder="Cryptogram" /></span>
+            <span><input class="decryption" type="button" value="Decryption" onclick="decryption()" /></span></p>
+    </div>
+    <p>
+        <div class="result" id="result"></div>
+        <!-- <input class="result" id="result" type="text" placeholder="Result Here" readonly/> -->
+    </p>
+    <div class="bottons">
+        <p>
+            <input class="copy" id="copy" type="button" value="Copy" onclick="copy()" />
+        </p>
+        <p>
+            <input class="init" id="init" type="button" value="Init" onclick="init()" />
+        </p>
+    </div>
+
+
+
+</body>
+<script>
+    function copy() {
+        var aux = document.createElement("input");
+        aux.setAttribute("value", document.getElementById("result").innerHTML);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+    }
+
+    function init() {
+        document.getElementById("key").value = "";
+        document.getElementById("plain").value = "";
+        document.getElementById("cryptogram").value = "";
+        document.getElementById("result").innerHTML = "";
+    }
+
+    function get_key() {
+        if (document.getElementById("key").value.length <= 0) {
+            return 1;
+        }
+
+        var result = 0;
+        var key = document.getElementById("key").value.split("");
+        var i = 0;
+
+        while (i < key.length) {
+            result = result + key[i].charCodeAt(0) * (i + 1);
+            i = i + 1;
+        }
+
+        return result;
+    }
+
+
+    function encryption() {
+        document.getElementById("cryptogram").value = "";
+
+        var plain_text = document.getElementById("plain").value; // get value of plain with id
+        var result = "";
+        var key = get_key();
+
+        if (plain.length <= 0) {
+            alert("Too Short");
+        }
+
+        var i = 0;
+        var list_text = plain_text.split("");
+
+        while (i < list_text.length - 1) {
+            result = result + list_text[i].charCodeAt(0) * key + " ";
+            i = i + 1;
+        }
+
+        result = result + list_text[i].charCodeAt(0) * key;
+
+        document.getElementById("result").innerHTML = result;
+    }
+
+    function decryption() {
+        document.getElementById("plain").value = "";
+
+        var encryption = document.getElementById("cryptogram").value.split(" ");
+        var result = "";
+        var key = get_key();
+
+        if (encryption.length <= 0) {
+            alert("Too Short");
+        }
+
+        var i = 0;
+
+        // code() = String.fromCharCode(a)
+        while (i < encryption.length) {
+            result = result + String.fromCharCode(encryption[i] / key);
+            i = i + 1;
+        }
+
+        document.getElementById("result").innerHTML = result;
+    }
+</script>
+
+</html>
