@@ -23,11 +23,14 @@ body {
     font-family: 'Wemakeprice-Bold';
 }
 
-.key, .plain,.cryptogram, .copy, .init, .result {
+.key, .plain,.cryptogram, .result {
     width: 50%;
     margin-left: 20%;
 }
 
+.copy, .init {
+    width: 50%;
+}
 .decryption, .encryption, .copy, .init {
     height: 50px;
     background-color:  #ADEFD1FF;
@@ -43,7 +46,8 @@ body {
 
 }
 
+.bottons {
 
-.copy, .init {
-    width: 51%;
+    position: relative;
+    left: 20.22223333%;
 }
