@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="main.css">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <title>암호화</title>
@@ -62,69 +63,126 @@
         result.style.height = "100px";
     }
 
-    function get_key() {
-        if (document.getElementById("key").value.length <= 0) {
-            return 1;
-        }
-
-        var result = 0;
-        var key = document.getElementById("key").value.split("");
-        var i = 0;
-
-        while (i < key.length) {
-            result = result + key[i].charCodeAt(0) * (i + 1);
-            i = i + 1;
-        }
-
-        return result;
-    }
-
-
     function encryption() {
         document.getElementById("cryptogram").value = "";
-        var plain_text = document.getElementById("plain").value; // get value of plain with id
-        var result = "";
-        var key = get_key();
+
+        var key = document.getElementById("key").value;
+        var plain = document.getElementById("plain").value;
+        
+        if (key.length <= 0) {
+            alert("Key is empty");
+            return -1;
+        }
 
         if (plain.length <= 0) {
-            alert("Too Short");
+            alert("Plain text is empty");
+            return -1;
         }
 
-        var i = 0;
-        var list_text = plain_text.split("");
-
-        while (i < list_text.length - 1) {
-            result = result + list_text[i].charCodeAt(0) * key + " ";
-            i = i + 1;
-        }
-
-        result = result + list_text[i].charCodeAt(0) * key;
+        document.getElementById("result").innerHTML = CryptoJS.AES.encrypt(plain, key);
         document.getElementById("result").style.height = "auto";
-        document.getElementById("result").innerHTML = result;
+
     }
 
     function decryption() {
         document.getElementById("plain").value = "";
 
-        var encryption = document.getElementById("cryptogram").value.split(" ");
-        var result = "";
-        var key = get_key();
+        var key = document.getElementById("key").value;
+        var encryption = document.getElementById("cryptogram").value;
+
+        if (key.length <= 0) {
+            alert("Key is empty");
+            return -1;
+        }
 
         if (encryption.length <= 0) {
-            alert("Too Short");
+            alert("Encryption is empty");
+            return -1;
         }
 
-        var i = 0;
-
-        // code() = String.fromCharCode(a)
-        while (i < encryption.length) {
-            result = result + String.fromCharCode(encryption[i] / key);
-            i = i + 1;
-        }
+        document.getElementById("result").innerHTML = CryptoJS.AES.decrypt(encryption, key).toString(CryptoJS.enc.Utf8);
         document.getElementById("result").style.height = "auto";
-
-        document.getElementById("result").innerHTML = result;
     }
+    // function get_key() {
+    //     if (document.getElementById("key").value.length <= 0) {
+    //         return 1;
+    //     }
+
+    //     var result = 0;
+    //     var key = document.getElementById("key").value.split("");
+    //     var i = 0;
+
+    //     while (i < key.length) {
+    //         result = result + key[i].charCodeAt(0) * (i + 1);
+    //         i = i + 1;
+    //     }
+
+    //     return result;
+    // }
+
+
+    // function encryption() {
+    //     try {
+    //         document.getElementById("cryptogram").value = "";
+    //         var plain_text = document.getElementById("plain").value; // get value of plain with id
+    //         var result = "";
+    //         var key = get_key();
+
+    //         if (plain_text.length <= 0) {
+    //             return -1;
+    //         }
+    //         var i = 0;
+    //         var list_text = plain_text.split("");
+
+    //         while (i < list_text.length - 1) {
+    //             result = result + list_text[i].charCodeAt(0) * key + " ";
+    //             i = i + 1;
+    //         }
+
+    //         result = result + list_text[i].charCodeAt(0) * key;
+    //         document.getElementById("result").style.height = "auto";
+    //         document.getElementById("result").innerHTML = result;
+
+    //         return 0;
+    //     } catch {
+    //         alert("Error");
+
+    //         return -1;
+    //     }
+
+    // }
+
+    // function decryption() {
+    //     try {
+    //         document.getElementById("plain").value = "";
+
+    //         var encryption = document.getElementById("cryptogram").value.split(" ");
+    //         var result = "";
+    //         var key = get_key();
+
+
+    //         var i = 0;
+
+    //         if (encryption.length <= 1) {
+    //             return -1;
+    //         }
+    //         // code() = String.fromCharCode(a)
+    //         while (i < encryption.length) {
+    //             result = result + String.fromCharCode(encryption[i] / key);
+    //             i = i + 1;
+    //         }
+
+    //         document.getElementById("result").style.height = "auto";
+    //         document.getElementById("result").innerHTML = result;
+
+    //         return 0
+    //     } catch {
+    //         alert("Error");
+
+    //         return -1;
+    //     }
+
+    // }
 </script>
 
 </html>
