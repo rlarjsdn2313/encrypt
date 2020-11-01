@@ -30,6 +30,7 @@
         <div class="result" id="result"></div>
         <!-- <input class="result" id="result" type="text" placeholder="Result Here" readonly/> -->
     </p>
+
     <div class="bottons">
         <p>
             <input class="copy" id="copy" type="button" value="Copy" onclick="copy()" />
@@ -53,10 +54,12 @@
     }
 
     function init() {
+        var result = document.getElementById("result");
         document.getElementById("key").value = "";
         document.getElementById("plain").value = "";
         document.getElementById("cryptogram").value = "";
         document.getElementById("result").innerHTML = "";
+        result.style.height = "100px";
     }
 
     function get_key() {
@@ -79,7 +82,6 @@
 
     function encryption() {
         document.getElementById("cryptogram").value = "";
-
         var plain_text = document.getElementById("plain").value; // get value of plain with id
         var result = "";
         var key = get_key();
@@ -97,7 +99,7 @@
         }
 
         result = result + list_text[i].charCodeAt(0) * key;
-
+        document.getElementById("result").style.height = "auto";
         document.getElementById("result").innerHTML = result;
     }
 
@@ -119,6 +121,7 @@
             result = result + String.fromCharCode(encryption[i] / key);
             i = i + 1;
         }
+        document.getElementById("result").style.height = "auto";
 
         document.getElementById("result").innerHTML = result;
     }
