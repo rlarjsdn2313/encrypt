@@ -43,6 +43,7 @@ body {
     border: none;
     padding: 5px 5px 5px 5px;
     height: 100px;
+    word-break:break-all;
 
 }
 
